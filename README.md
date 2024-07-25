@@ -1,60 +1,60 @@
 # Pushover Bash Script
-A Bash shell script to send pushover notifications. A [Pushover account](https://pushover.net/) is required to use this script.
+Ein Bash-Shell-Skript zum Senden von Pushover-Benachrichtigungen. Ein [Pushover-Konto](https://pushover.net/) ist erforderlich, um dieses Skript zu verwenden.
 
-## Usage
+## Verwendung
 
 ```
-usage: pushover.sh <apikey> <userkey> <message> [options]
+usage: pushover.sh <apikey> <userkey> <message> [optionen]
 
-  -t,  --token APIKEY        The pushover.net API Key for your application
-  -u,  --user USERKEY        Your pushover.net user key
-  -m,  --message MESSAGE     The message to send; supports HTML formatting
-  -a,  --attachment filename The Picture you want to send
-  -T,  --title TITLE         Title of the message
-  -d,  --device NAME         Comma seperated list of devices to receive message
-  -U,  --url URL             URL to send with message
-       --url-title URLTITLE  Title of the URL
-  -p,  --priority PRIORITY   Priority of the message
-                               -2 - no notification/alert
-                               -1 - quiet notification
-                                0 - normal priority
-                                1 - bypass the user's quiet hours
-                                2 - require confirmation from the user
-  -e,  --expire SECONDS      Set expiration time for for notifications with priority 2 (default 180)
-  -r,  --retry COUNT         Set retry period for notifications with priority 2 (default 30)
-  -s,  --sound SOUND         Notification sound to play with message
-                               pushover - Pushover (default)
-                               bike - Bike
-                               bugle - Bugle
-                               cashregister - Cash Register
-                               classical - Classical
-                               cosmic - Cosmic
-                               falling - Falling
+  -t,  --token APIKEY        Der API-Schlüssel für deine Anwendung auf pushover.net
+  -u,  --user USERKEY        Dein Benutzer-Schlüssel auf pushover.net
+  -m,  --message MESSAGE     Die Nachricht, die gesendet werden soll; unterstützt HTML-Formatierung
+  -a,  --attachment filename Das Bild, das du senden möchtest
+  -T,  --title TITLE         Titel der Nachricht
+  -d,  --device NAME         Kommagetrennte Liste der Geräte, die die Nachricht erhalten sollen
+  -U,  --url URL             URL, die mit der Nachricht gesendet werden soll
+       --url-title URLTITLE  Titel der URL
+  -p,  --priority PRIORITY   Priorität der Nachricht
+                               -2 - keine Benachrichtigung/Alarm
+                               -1 - stille Benachrichtigung
+                                0 - normale Priorität
+                                1 - Umgehung der Ruhezeiten des Benutzers
+                                2 - Bestätigung durch den Benutzer erforderlich
+  -e,  --expire SECONDS      Ablaufzeit für Benachrichtigungen mit Priorität 2 festlegen (Standard 180)
+  -r,  --retry COUNT         Wiederholungszeitraum für Benachrichtigungen mit Priorität 2 festlegen (Standard 30)
+  -s,  --sound SOUND         Benachrichtigungston, der mit der Nachricht abgespielt wird
+                               pushover - Pushover (Standard)
+                               bike - Fahrrad
+                               bugle - Trompete
+                               cashregister - Registrierkasse
+                               classical - Klassisch
+                               cosmic - Kosmisch
+                               falling - Fallen
                                gamelan - Gamelan
-                               incoming - Incoming
-                               intermission - Intermission
-                               magic - Magic
-                               mechanical - Mechanical
+                               incoming - Eingehend
+                               intermission - Pause
+                               magic - Magisch
+                               mechanical - Mechanisch
                                pianobar - Piano Bar
-                               siren - Siren
-                               spacealarm - Space Alarm
-                               tugboat - Tug Boat
-                               alien - Alien Alarm (long)
-                               climb - Climb (long)
-                               persistent - Persistent (long)
-                               echo - Pushover Echo (long)
-                               updown - Up Down (long)
-                               none - None (silent)
+                               siren - Sirene
+                               spacealarm - Weltraumalarm
+                               tugboat - Schlepper
+                               alien - Alien-Alarm (lang)
+                               climb - Klettern (lang)
+                               persistent - Beharrlich (lang)
+                               echo - Pushover Echo (lang)
+                               updown - Hoch Runter (lang)
+                               none - Keine (stumm)
 ```
 
-## Configuration
-Configuration files can be placed in **/etc/pushover/pushover-config** or in the user's home directory at **$HOME/.pushover/pushover-config**. The options are processed in order of importance for location.
+## Konfiguration
+Konfigurationsdateien können in **/etc/pushover/pushover-config** oder im Home-Verzeichnis des Benutzers unter **$HOME/.pushover/pushover-config** abgelegt werden. Die Optionen werden in der Reihenfolge ihrer Wichtigkeit für den Standort verarbeitet.
 
-1) Options in /etc/pushover/pushover-config are processed first
-2) Options in $HOME/.pushover/pushover-config are processed next
-3) Command line arguments override all configuration values
+1) Optionen in /etc/pushover/pushover-config werden zuerst verarbeitet.
+2) Optionen in $HOME/.pushover/pushover-config werden als nächstes verarbeitet.
+3) Befehlszeilenargumente überschreiben alle Konfigurationswerte.
 
-The default configuration is empty and contains the following:
+Die Standardkonfiguration ist leer und enthält Folgendes:
 
 ```
 api_token=
@@ -67,70 +67,70 @@ title=
 sound=
 ```
 
-**NOTE:** If you have a value defined in /etc/default/ and also have overrides in $HOME/.pushover/ all empty options in $HOME/.pushover/ must not exist in the file. For example, I have the following configuration in /etc/default/
+**HINWEIS:** Wenn du einen Wert in /etc/default/ definiert hast und auch Überschreibungen in $HOME/.pushover/ vorhanden sind, dürfen alle leeren Optionen in $HOME/.pushover/ nicht in der Datei vorhanden sein. Zum Beispiel habe ich die folgende Konfiguration in /etc/default/
 
 ```
 api_token=my-app-api-token
 user_key=my-user-key
 device=
 url=
-url_title="I want all URLs to have this title"
+url_title="Ich möchte, dass alle URLs diesen Titel haben"
 priority=
-title="this is a generic title"
+title="das ist ein generischer Titel"
 sound=
 ```
 
-If I want to override only **title** for a specific user, the configuration in $HOME/.pushover/ will look like this
+Wenn ich nur **title** für einen bestimmten Benutzer überschreiben möchte, sieht die Konfiguration in $HOME/.pushover/ so aus:
 
 ```
-title="title for specific user"
+title="Titel für spezifischen Benutzer"
 ```
 
-## Examples
-Send a simple "This is a test" message to all devices using the stored configuration in either **/etc/default/pushover-config** or **$HOME/.pushover/pushover-config**
+## Beispiele
+Eine einfache "Dies ist ein Test" Nachricht an alle Geräte senden, die die gespeicherte Konfiguration in **/etc/default/pushover-config** oder **$HOME/.pushover/pushover-config** verwendet.
 
 ```
-pushover.sh -m "This is a test"
+pushover.sh -m "Dies ist ein Test"
 ```
 
-Send a simple "This is a test" message to all devices using the specified API token and user key
+Eine einfache "Dies ist ein Test" Nachricht an alle Geräte senden, die den angegebenen API-Schlüssel und Benutzer-Schlüssel verwenden.
 
 ```
-pushover.sh -t token -u key -m "This is a test"
+pushover.sh -t token -u key -m "Dies ist ein Test"
 ```
 
-Send a simple "This is a test" message with the title "Test Title" to all devices using the specified API token and user key
+Eine einfache "Dies ist ein Test" Nachricht mit dem Titel "Test Titel" an alle Geräte senden, die den angegebenen API-Schlüssel und Benutzer-Schlüssel verwenden.
 
 ```
-pushover.sh -t token -u key -m "This is a test" -T "Test Title"
+pushover.sh -t token -u key -m "Dies ist ein Test" -T "Test Titel"
 ```
 
-Send a simple "This is a test" message to the devices named "Phone" and "Home Desktop" using the specified API token and user key
+Eine einfache "Dies ist ein Test" Nachricht an die Geräte namens "Telefon" und "Heim Desktop" senden, die den angegebenen API-Schlüssel und Benutzer-Schlüssel verwenden.
 
 ```
-pushover.sh -t token -u key -m "This is a test" -d "Phone,Home Desktop"
+pushover.sh -t token -u key -m "Dies ist ein Test" -d "Telefon,Heim Desktop"
 ```
 
-Send a simple "This is a test" message to all devices that contains a link to www.google.com titled "Google" using the specified API token and user key
+Eine einfache "Dies ist ein Test" Nachricht an alle Geräte senden, die einen Link zu www.google.com mit dem Titel "Google" enthält, und den angegebenen API-Schlüssel und Benutzer-Schlüssel verwenden.
 
 ```
-pushover.sh -t token -u key -m "This is a test" -U "http://www.google.com" --url-title Google
+pushover.sh -t token -u key -m "Dies ist ein Test" -U "http://www.google.com" --url-title Google
 ```
 
-Send a simple "This is a test" high priority message to all devices using the specified API token and user key
+Eine einfache "Dies ist ein Test" Nachricht mit hoher Priorität an alle Geräte senden, die den angegebenen API-Schlüssel und Benutzer-Schlüssel verwenden.
 
 ```
-pushover.sh -t token -u key -m "This is a test" -p 1
+pushover.sh -t token -u key -m "Dies ist ein Test" -p 1
 ```
 
-Send a simple "This is a test" message to all devices that uses the sound of a bike bell as the notification sound using the specified API token and user key
+Eine einfache "Dies ist ein Test" Nachricht an alle Geräte senden, die den Ton einer Fahrradklingel als Benachrichtigungston verwenden, und den angegebenen API-Schlüssel und Benutzer-Schlüssel verwenden.
 
 ```
-pushover.sh -t token -u key -m "This is a test" -s bike
+pushover.sh -t token -u key -m "Dies ist ein Test" -s bike
 ```
 
-Sends a simple "This is a test Pic" message to all devices and send the Picture with the message
+Eine einfache "Dies ist ein Test Pic" Nachricht an alle Geräte senden und das Bild mit der Nachricht senden.
 
 ```
-pushover.sh -t token -u key -m "This is a test Pic" -a /path/to/pic.jpg
+pushover.sh -t token -u key -m "Dies ist ein Test Pic" -a /path/to/pic.jpg
 ```
